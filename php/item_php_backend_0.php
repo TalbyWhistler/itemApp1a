@@ -34,6 +34,14 @@
                 $item=$functionParams["item"];
                 $outputMessage=fetchItemInfoByItem($item);
                 break;
+            case("submitItemValues"):
+                $functionParams=$jsonInput["params"];
+                $item=$functionParams["item"];
+                $city=$functionParams["city"];
+                $price=$functionParams["price"];
+                //$outputMessage='submitItemValues control is called with values '.$item.' '.$city.' '.$price;
+                $outputMessage=submitItemEntry($item,$city,$price);
+                break;
         }
     
 

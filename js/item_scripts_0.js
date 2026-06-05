@@ -13,7 +13,6 @@ function itemPageInit()
     fetchItemsForItems();
 }
 
-
 function itemAttachStyleSheet()
 {
     const styleSheetLocation='css/item_styles.css';
@@ -23,6 +22,19 @@ function itemAttachStyleSheet()
     styleLink.href=styleSheetLocation;
     document.head.appendChild(styleLink);
 }
+
+function fetchCitiesForItems()
+{
+    callBackend("fetchCities",'',printCities);
+}
+
+function fetchItemsForItems()
+{
+    callBackend("fetchItems",'',printItems);
+}
+
+
+
 
 
 function callBackend(inputFunction,parameters,callback)
@@ -145,26 +157,12 @@ function testBackend()
     callBackend("testFunction",params,testPrint);
 }
 
-function fetchCitiesForItems()
-{
-    callBackend("fetchCities",'',printCities);
-}
 
-function fetchItemsForItems()
-{
-    callBackend("fetchItems",'',printItems);
-}
 
 function handleItemCityClick(city)
 {
     console.log('item city button hit for ' + city);
     fetchCityItemInfo(city);
-}
-
-function handleItemItemClick(item)
-{
-    console.log('item item button hit for ' + item);
-    fetchItemInfo(item);
 }
 
 function fetchCityItemInfo(city)
@@ -173,10 +171,93 @@ function fetchCityItemInfo(city)
     callBackend("fetchCityItemInfo",params,printInfoByCity);
 }
 
+
+function handleItemItemClick(item)
+{
+    console.log('item item button hit for ' + item);
+    fetchItemInfo(item);
+}
+
+
 function fetchItemInfo(item)
 {
     params={item:item};
     callBackend("fetchItemItemInfo",params,printInfoByItem);
+}
+
+function handleItemSubmit()
+{
+    let statusOutputArea=document.getElementById("itemStatusIndicator");
+
+    console.log('handle item submit');
+    let item=document.getElementById("itemItemInput").value.toLowerCase().trim();
+    let city=document.getElementById("itemCityInput").value.toLowerCase().trim();
+    let price=document.getElementById("itemPriceInput").value;
+    if (validateInput(item,city,price))
+    {
+        console.log("Item submit:",item,' ',city,' ',price);
+        statusOutputArea.innerHTML='Input accepted';
+        submitItemValues(item,city,price);
+    }
+    else 
+    {
+        statusOutputArea.innerHTML='Bad input';
+    }
+}
+
+
+function submitItemValues(item,city,price)
+{
+    let inputFunction='submitItemValues';
+    let params={item:item,city:city,price:price};
+    callBackend(inputFunction,params,printForUpdate);
+}
+
+function printForUpdate(data)
+{
+    console.log('print for update');
+    console.log(data);
+    let statusOutput=document.getElementById("itemStatusIndicator");
+    statusOutput.innerHTML=data;
+}
+
+function validateInput(item,city,price)
+{
+    if (city.length==0 || item.length==0 || price.length==0)
+    {
+        return false;
+    }
+    if(!isAlpha(city) || !isAlpha(item) || !isNumber(price))
+    {
+        return false;
+    }
+    return true;
+}
+
+function isAlpha(input)
+{
+    const contained='abcdefghijklmnoqrstuvwxyz ';
+    for(let i=0;i<input.length;i++)
+    {
+        if (contained.indexOf(input[i])==-1)
+        {
+            return false;
+        }
+    }
+    return true;
+}
+
+function isNumber(input)
+{
+    const contained='0123456789';
+    for (let i=0;i<input.length;i++)
+    {
+        if(contained.indexOf(input[i])==-1)
+        {
+            return false;
+        }
+    }
+    return true;
 }
 
 function printItems(data)

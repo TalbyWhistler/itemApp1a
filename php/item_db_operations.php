@@ -99,4 +99,23 @@ function selectOnly($statement,$attribute)
                 return false;
             }
 }
+
+
+function submitItemEntry($item,$city,$price)
+{
+    include 'item_db_connect.php';
+    $stmt=$conn->prepare("delete from items where item=? and city=?");
+    $stmt->bind_param("ss",$item,$city);
+    $stmt->execute();
+    $stmt=$conn->prepare("insert into items values(?,?,?)");
+    $stmt->bind_param("ssi",$item,$city,$price);
+    if ($stmt->execute())
+        {
+            return 'Record updated';
+        }
+        else 
+            {
+                return "Update failed";
+            }
+}
 ?>
