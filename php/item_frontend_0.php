@@ -1,38 +1,48 @@
 <?php 
+        // classes 
+        $itemPageId="itemPage";
+        $panelClass="itemInputPanel";
+        $panelInputsClass="itemPanelInputs";
+        $titleClass="itemTitle";
+       // $cityButtonClass="itemCityButton";
+       // $itemButtonClass="itemButton";
+       // class="itemInfoTable"
+       //id 
+        $submitButtonId="itemSubmitButton";
         $titleBox=
         '
-            <h1>Item Keeper</h1>
+            <h1 class='.$titleClass.'>Item Keeper</h1>
         ';
         $cityInput=
         '
             <label for="itemCityInput">City:</label>
             </br>
-            <input name="itemCityInput" id="itemCityInput">
+            <input class='.$panelInputsClass.'name="itemCityInput" id="itemCityInput">
         ';
         $itemInput=
         '
             </br>
             <label for="itemItemInput">Item:</label>
             </br>
-            <input name="itemItemInput" id="itemItemInput">
+            <input class='.$panelInputsClass.' name="itemItemInput" id="itemItemInput">
         ';
         $costInput=
         '
             </br>
             <label for="itemPriceInput">Cost:</label>
             </br>
-            <input name="itemPriceInput" id="itemPriceInput">
+            <input class='.$panelInputsClass.'  name="itemPriceInput" id="itemPriceInput">
 
         ';
         $itemSubmitButton=
         '
             </br>
-            <button onclick="handleItemSubmit()" id="itemSubmitButton">Submit</button>   
+            <button onclick="handleItemSubmit()" id='.$submitButtonId.'>Submit</button>   
         ';
         $statusIndicator='<div id="itemStatusIndicatorBox"><p id="itemStatusIndicator">Ok</p></div>';
         $inputBox=
         '
-            <div id="itemInputBox">
+            <div id="itemInputBox" class='.$panelClass.'>
             '.$cityInput.$itemInput.$costInput.$itemSubmitButton.$statusIndicator.'
             </div>
         ';
@@ -45,13 +55,13 @@
             '.$cityButtonArea.$itemButtonArea.'
         </div>';
         $infoOutputArea='<div id="itemInfoOutputArea"></div>';
-        $fullOutput=
+        $fullOutput='<div id='.$itemPageId.'>'.
         $titleBox
         .$inputBox
         //.$scriptTestButton 
         .$scriptLink
         .$middleBand
-        .$infoOutputArea;
+        .$infoOutputArea.'</div>';
 
         echo $fullOutput;
 ?>

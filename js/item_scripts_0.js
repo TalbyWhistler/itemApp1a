@@ -219,6 +219,9 @@ function printForUpdate(data)
     console.log(data);
     let statusOutput=document.getElementById("itemStatusIndicator");
     statusOutput.innerHTML=data;
+    document.getElementById("itemItemInput").value='';
+    document.getElementById("itemPriceInput").value='';
+    document.getElementById("itemItemInput").focus();
 }
 
 function validateInput(item,city,price)
