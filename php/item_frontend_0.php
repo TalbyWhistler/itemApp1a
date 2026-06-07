@@ -1,67 +1,108 @@
 <?php 
-        // classes 
-        $itemPageId="itemPage";
-        $panelClass="itemInputPanel";
-        $panelInputsClass="itemPanelInputs";
-        $titleClass="itemTitle";
-       // $cityButtonClass="itemCityButton";
-       // $itemButtonClass="itemButton";
-       // class="itemInfoTable"
-       //id 
-        $submitButtonId="itemSubmitButton";
-        $titleBox=
-        '
-            <h1 class='.$titleClass.'>Item Keeper</h1>
-        ';
-        $cityInput=
-        '
-            <label for="itemCityInput">City:</label>
-            </br>
-            <input class='.$panelInputsClass.'name="itemCityInput" id="itemCityInput">
-        ';
-        $itemInput=
-        '
-            </br>
-            <label for="itemItemInput">Item:</label>
-            </br>
-            <input class='.$panelInputsClass.' name="itemItemInput" id="itemItemInput">
-        ';
-        $costInput=
-        '
-            </br>
-            <label for="itemPriceInput">Cost:</label>
-            </br>
-            <input class='.$panelInputsClass.'  name="itemPriceInput" id="itemPriceInput">
 
-        ';
-        $itemSubmitButton=
-        '
-            </br>
-            <button onclick="handleItemSubmit()" id='.$submitButtonId.'>Submit</button>   
-        ';
-        $statusIndicator='<div id="itemStatusIndicatorBox"><p id="itemStatusIndicator">Ok</p></div>';
-        $inputBox=
-        '
-            <div id="itemInputBox" class='.$panelClass.'>
-            '.$cityInput.$itemInput.$costInput.$itemSubmitButton.$statusIndicator.'
-            </div>
-        ';
+
+function createElement($element,$id,$class,$inner)
+    {
+        $elementString='';
+        $elementString=$elementString.'<'.$element.' id="'.$id.'" class="'.$class.'"';
+        $elementString=$elementString.'>';
+        $elementString=$elementString.$inner;
+        $elementString=$elementString.'</'.$element.'>';
+        return $elementString;
+    }
+
+function createInput($id,$class)
+    {
+        $elementString='';
+        $elementString=$elementString.'<input id="'.$id.'" class="'.$class.'"';
+        $elementString=$elementString.'/>';
+       // $elementString=$elementString.$inner;
+    //    $elementString=$elementString.'</'.$element.'>';
+        return $elementString;
+    }
+
+function createButton($id,$class,$function,$inner)
+    {
+        $elementString='';
+        $elementString=$elementString
+            .'<button id='.$id.' class='.$class.' onclick="'.$function.'()">'
+            .$inner 
+            .'</button>';
+        return $elementString;
+    }
+
+function itemPage()
+{
+    $titleBox=createElement('h1','itemTitle','itemTitle',"Item Keeper");
+        $br='</br>';
+        $cityInputLabel=createElement('label','cityInputLabel','inputLabel','City:');
+        $cityInputBox=createInput("itemCityInput","itemPanelInputs");
+       
+        $cityInput=''
+            .$cityInputLabel  
+            .$br 
+            .$cityInputBox 
+        ;
+        $itemLabel=createElement('label','itemInputLabel','inputLabel','Item:');
+        $itemInputBox=createInput("itemItemInput","itemPanelInputs");
+        
+        $itemInput=''
+            .$br 
+            .$itemLabel 
+            .$br 
+            .$itemInputBox;
+        
+        $priceLabel=createElement('label','itemPriceInputLabel','inputLabel','Price:');
+        $priceInput=createInput("itemPriceInput","itemPanelInputs");
+        
+        $costInput=''
+            .$br 
+            .$priceLabel 
+            .$br
+            .$priceInput;
+        
+        $submitButton=createButton("itemSubmitButton","submitButton","handleItemSubmit","Submit");
+        
+        $itemSubmitButton=''
+            .$br 
+            .$submitButton;
+
+        $indicator=createElement('p','itemStatusIndicator','statusIndicator','Ready');
+        $indicatorBox=createElement('div','itemStatusIndicatorBox','indicatorBox',$indicator);
+        
+        $inputBoxContents=''
+            .$cityInput 
+            .$itemInput 
+            .$costInput 
+            .$itemSubmitButton 
+            .$indicatorBox;
+
+        $inputBox=createElement('div','itemInputBox','itemInputPanel',$inputBoxContents);
         $scriptLink='<script src="js/item_scripts_0.js"></script>';
-        $scriptTestButton='<button onclick="testFunction0()">Test Function 0</button>';
-        $cityButtonArea='<div id="cityButtonArea"></div>';
-        $itemButtonArea='<div id="itemButtonArea"></div>';
-        $middleBand='
-        <div id="itemMiddleBand">
-            '.$cityButtonArea.$itemButtonArea.'
-        </div>';
-        $infoOutputArea='<div id="itemInfoOutputArea"></div>';
-        $fullOutput='<div id='.$itemPageId.'>'.
-        $titleBox
-        .$inputBox
-        //.$scriptTestButton 
-        .$scriptLink
-        .$middleBand
-        .$infoOutputArea.'</div>';
+      
+        $cityButtonArea=createElement('div','cityButtonArea','infoSubArea','');
+        $itemButtonArea=createElement('div','itemButtonArea','infoSubArea','');
 
-        echo $fullOutput;
+        $middleBandContents='' 
+            .$cityButtonArea 
+            .$itemButtonArea;
+       
+        $middleBand=createElement('div','itemMiddleBand','midBandArea',$middleBandContents);   
+        
+        $infoOutputArea=createElement('div','itemInfoOutputArea','outputArea','');
+        
+        $pageContents=''
+            .$titleBox
+            .$inputBox 
+            .$scriptLink 
+            .$middleBand 
+            .$infoOutputArea;
+        
+        $pageOutput=createElement('div','itemPage','page',$pageContents);
+        
+        return $pageOutput;
+}
+
+echo itemPage();
+        
 ?>
